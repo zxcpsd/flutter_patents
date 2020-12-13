@@ -23,68 +23,13 @@ class _SearchTabState extends State<SearchTab> {
   final txtTitle = TextEditingController();
   @override
   Widget build(BuildContext context) {
-    return Container(
-        child: Center(
-      child:
-          Column(mainAxisAlignment: MainAxisAlignment.spaceAround, children: <
-              Widget>[
-        FlatButton(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(30.0),
-          ),
-          padding: EdgeInsets.all(10.0),
-          onPressed: () {
-            showDialog<void>(
-                context: context,
-                builder: (BuildContext context) {
-                  return AlertDialog(
-                    title: Text('Find patent by id'),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(30.0),
-                    ),
-                    content: Container(
-                      height: (MediaQuery.of(context).orientation ==
-                              Orientation.landscape)
-                          ? MediaQuery.of(context).size.height * 0.5
-                          : MediaQuery.of(context).size.height * 0.2,
-                      child: Center(
-                        child: SingleChildScrollView(
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: <Widget>[
-                              TextField(
-                                controller: txtId,
-                                decoration:
-                                    InputDecoration(hintText: 'Patent id'),
-                              ),
-                              Padding(
-                                padding: EdgeInsets.all(14),
-                              ),
-                              FlatButton(
-                                  onPressed: () {
-                                    Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) => SearchWidget(
-                                                txtId.text, SearchMode.byId)));
-                                  },
-                                  child: Column(
-                                    children: <Widget>[
-                                      Icon(Icons.search),
-                                      Text('Search')
-                                    ],
-                                  ))
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                  );
-                });
-          },
-          child: SearchIcon('id'),
-        ),
-        FlatButton(
+    return SingleChildScrollView(
+      child: Container(
+          child: Center(
+        child:
+            Column(mainAxisAlignment: MainAxisAlignment.spaceAround, children: <
+                Widget>[
+          FlatButton(
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(30.0),
             ),
@@ -94,32 +39,36 @@ class _SearchTabState extends State<SearchTab> {
                   context: context,
                   builder: (BuildContext context) {
                     return AlertDialog(
-                      title: Text('Find patent by title'),
+                      title: Text('Find patent by id'),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(30.0),
                       ),
                       content: Container(
-                        height: MediaQuery.of(context).size.height * 0.2,
+                        height: (MediaQuery.of(context).orientation ==
+                                Orientation.landscape)
+                            ? MediaQuery.of(context).size.height * 0.5
+                            : MediaQuery.of(context).size.height * 0.2,
                         child: Center(
                           child: SingleChildScrollView(
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: <Widget>[
                                 TextField(
-                                  controller: txtTitle,
+                                  controller: txtId,
                                   decoration:
-                                      InputDecoration(hintText: 'Patent title'),
+                                      InputDecoration(hintText: 'Patent id'),
                                 ),
-                                Padding(padding: EdgeInsets.all(15)),
+                                Padding(
+                                  padding: EdgeInsets.all(14),
+                                ),
                                 FlatButton(
                                     onPressed: () {
                                       Navigator.push(
                                           context,
                                           MaterialPageRoute(
                                               builder: (context) =>
-                                                  SearchWidget(
-                                                      txtTitle.text.split(' '),
-                                                      SearchMode.byTitle)));
+                                                  SearchWidget(txtId.text,
+                                                      SearchMode.byId)));
                                     },
                                     child: Column(
                                       children: <Widget>[
@@ -135,82 +84,139 @@ class _SearchTabState extends State<SearchTab> {
                     );
                   });
             },
-            child: SearchIcon('title')),
-        FlatButton(
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(30.0),
-            ),
-            padding: EdgeInsets.all(10.0),
-            onPressed: () {
-              showDialog<void>(
-                  context: context,
-                  builder: (BuildContext context) {
-                    return AlertDialog(
-                      title: Text('Find patent by author and date'),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(30.0),
-                      ),
-                      content: Container(
-                        height: MediaQuery.of(context).size.height * 0.4,
-                        child: Center(
-                          child: SingleChildScrollView(
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: <Widget>[
-                                TextField(
-                                  controller: txtFirstName,
-                                  decoration: InputDecoration(
-                                      hintText: 'Patent author first name'),
-                                ),
-                                TextField(
-                                  controller: txtLastName,
-                                  decoration: InputDecoration(
-                                      hintText: 'Patent author last name'),
-                                ),
-                                TextField(
-                                  controller: txtDateFrom,
-                                  decoration: InputDecoration(
-                                      hintText: 'Date from: YYYY-MM-DD'),
-                                ),
-                                TextField(
-                                  controller: txtDateTo,
-                                  decoration: InputDecoration(
-                                      hintText: 'Date to: YYYY-MM-DD'),
-                                ),
-                                Padding(padding: EdgeInsets.all(15)),
-                                FlatButton(
-                                    onPressed: () {
-                                      Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  SearchWidget({
-                                                    "firstName":
-                                                        txtFirstName.text,
-                                                    "lastName":
-                                                        txtLastName.text,
-                                                    "dateTo": txtDateTo.text,
-                                                    "dateFrom":
-                                                        txtDateFrom.text,
-                                                  }, SearchMode.byParams)));
-                                    },
-                                    child: Column(
-                                      children: <Widget>[
-                                        Icon(Icons.search),
-                                        Text('Search')
-                                      ],
-                                    ))
-                              ],
+            child: SearchIcon('id'),
+          ),
+          FlatButton(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(30.0),
+              ),
+              padding: EdgeInsets.all(10.0),
+              onPressed: () {
+                showDialog<void>(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return AlertDialog(
+                        title: Text('Find patent by title'),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30.0),
+                        ),
+                        content: Container(
+                          height: MediaQuery.of(context).size.height * 0.2,
+                          child: Center(
+                            child: SingleChildScrollView(
+                              child: Column(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: <Widget>[
+                                  TextField(
+                                    controller: txtTitle,
+                                    decoration: InputDecoration(
+                                        hintText: 'Patent title'),
+                                  ),
+                                  Padding(padding: EdgeInsets.all(15)),
+                                  FlatButton(
+                                      onPressed: () {
+                                        Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    SearchWidget(
+                                                        txtTitle.text
+                                                            .split(' '),
+                                                        SearchMode.byTitle)));
+                                      },
+                                      child: Column(
+                                        children: <Widget>[
+                                          Icon(Icons.search),
+                                          Text('Search')
+                                        ],
+                                      ))
+                                ],
+                              ),
                             ),
                           ),
                         ),
-                      ),
-                    );
-                  });
-            },
-            child: SearchIcon('author and date')),
-      ]),
-    ));
+                      );
+                    });
+              },
+              child: SearchIcon('title')),
+          FlatButton(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(30.0),
+              ),
+              padding: EdgeInsets.all(10.0),
+              onPressed: () {
+                showDialog<void>(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return AlertDialog(
+                        title: Text('Find patent by author and date'),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30.0),
+                        ),
+                        content: Container(
+                          height: MediaQuery.of(context).size.height * 0.4,
+                          child: Center(
+                            child: SingleChildScrollView(
+                              child: Column(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: <Widget>[
+                                  TextField(
+                                    controller: txtFirstName,
+                                    decoration: InputDecoration(
+                                        hintText: 'Patent author first name'),
+                                  ),
+                                  TextField(
+                                    controller: txtLastName,
+                                    decoration: InputDecoration(
+                                        hintText: 'Patent author last name'),
+                                  ),
+                                  TextField(
+                                    controller: txtDateFrom,
+                                    decoration: InputDecoration(
+                                        hintText: 'Date from: YYYY-MM-DD'),
+                                  ),
+                                  TextField(
+                                    controller: txtDateTo,
+                                    decoration: InputDecoration(
+                                        hintText: 'Date to: YYYY-MM-DD'),
+                                  ),
+                                  Padding(padding: EdgeInsets.all(15)),
+                                  FlatButton(
+                                      onPressed: () {
+                                        Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    SearchWidget({
+                                                      "firstName":
+                                                          txtFirstName.text,
+                                                      "lastName":
+                                                          txtLastName.text,
+                                                      "dateTo": txtDateTo.text,
+                                                      "dateFrom":
+                                                          txtDateFrom.text,
+                                                    }, SearchMode.byParams)));
+                                      },
+                                      child: Column(
+                                        children: <Widget>[
+                                          Icon(Icons.search),
+                                          Text('Search')
+                                        ],
+                                      ))
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                      );
+                    });
+              },
+              child: SearchIcon('author and date')),
+        ]),
+      )),
+    );
   }
 }
 
