@@ -21,7 +21,8 @@ class _PatentsMainScreenState extends State<PatentsMainScreen> {
       appBar: AppBar(
         title: const Text('Patents'),
       ),
-      body: _widgetOptions.elementAt(_selectedIndex),
+      body: SingleChildScrollView(
+          child: _widgetOptions.elementAt(_selectedIndex)),
       bottomNavigationBar: BottomNavigationBar(
         items: <BottomNavigationBarItem>[
           BottomNavigationBarItem(
