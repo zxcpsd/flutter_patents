@@ -16,7 +16,7 @@ class DbHelper {
       db = await openDatabase(join(await getDatabasesPath(), 'patents.db'),
           onCreate: (database, version) {
         database.execute(
-            'CREATE TABLE patents(id INTEGER PRIMARY KEY, pid TEXT, title TEXT, date TEXT, description TEXT)');
+            'CREATE TABLE patents(id INTEGER PRIMARY KEY, pid TEXT UNIQUE, title TEXT, date TEXT, description TEXT)');
       }, version: version);
     }
     return db;
