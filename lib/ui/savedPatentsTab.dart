@@ -1,71 +1,50 @@
 import 'package:flutter/material.dart';
+import 'package:patents/models/savedPatents.dart';
+import 'package:provider/provider.dart';
 
-import '../util/dbHelper.dart';
 import '../models/patent.dart';
 
-class SavedPatentsTab extends StatefulWidget {
-  @override
-  _SavedPatentsTabState createState() => _SavedPatentsTabState();
-}
-
-class _SavedPatentsTabState extends State<SavedPatentsTab> {
-  DbHelper helper;
-  List<Patent> list;
-  @override
-  void initState() {
-    helper = DbHelper();
-    super.initState();
-  }
-
+class SavedPatentsTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    getData();
-    return Container(
-        child: ListView.builder(
-            itemCount: (list != null) ? list.length : 0,
-            itemBuilder: (BuildContext context, int index) {
-              return Dismissible(
-                key: Key(list[index].patentId),
-                onDismissed: (direction) {
-                  String strName = list[index].patentId;
-                  helper.deletePatent(list[index]);
-                  setState(
-                    () {
-                      list.removeAt(index);
+    return ChangeNotifierProvider(
+      create: (context) => SavedPatentsModel(),
+      child: Consumer<SavedPatentsModel>(
+        builder: (context, model, child) => Container(
+            child: ListView.builder(
+                itemCount: (model.list != null) ? model.list.length : 0,
+                itemBuilder: (BuildContext context, int index) {
+                  Patent patent = model.list[index];
+                  return Dismissible(
+                    key: Key(patent.patentId),
+                    onDismissed: (direction) {
+                      String strName = patent.patentId;
+                      model.deletePatent(index);
                       Scaffold.of(context).showSnackBar(
                           SnackBar(content: Text('$strName deleted')));
                     },
+                    child: ListTile(
+                      title: Text(patent.title),
+                      subtitle: Text('${patent.date} ID:${patent.patentId}'),
+                      onTap: () {
+                        showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return AlertDialog(
+                                title: Text(patent.title),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(30.0),
+                                ),
+                                content: Container(
+                                    child: SingleChildScrollView(
+                                        child: Text(patent.description))),
+                              );
+                            });
+                      },
+                    ),
                   );
-                },
-                child: ListTile(
-                  title: Text(list[index].title),
-                  subtitle:
-                      Text('${list[index].date} ID:${list[index].patentId}'),
-                  onTap: () {
-                    showDialog(
-                        context: context,
-                        builder: (BuildContext context) {
-                          return AlertDialog(
-                            title: Text(list[index].title),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(30.0),
-                            ),
-                            content: Container(
-                                child: SingleChildScrollView(
-                                    child: Text(list[index].description))),
-                          );
-                        });
-                  },
-                ),
-              );
-            }));
-  }
-
-  Future getData() async {
-    await helper.openDb();
-    list = await helper.getPatents();
-    setState(() {
-      list = list;
-    });
+                })),
+      ),
+    );
   }
 }
