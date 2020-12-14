@@ -6,7 +6,6 @@ import 'package:patents/models/patent.dart';
 import 'package:provider/provider.dart';
 
 import '../models/inventor.dart';
-import '../util/netHelper.dart';
 
 final globalKey = GlobalKey<ScaffoldState>();
 
@@ -264,9 +263,7 @@ class SearchWidget extends StatelessWidget {
                               if (model.isUpdateExecuted &&
                                   scrollInfo.metrics.pixels ==
                                       scrollInfo.metrics.maxScrollExtent &&
-                                  (NetHelper.currentTotalCount -
-                                          model.pages * 50 >
-                                      0)) {
+                                  (model.currentCount - model.pages * 50 > 0)) {
                                 model.startLoading();
                               }
                               return true;
