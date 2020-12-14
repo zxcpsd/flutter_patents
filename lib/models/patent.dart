@@ -21,12 +21,4 @@ class PatentWithAuthors extends Patent {
   PatentWithAuthors(Patent patent, this.authors)
       : super(patent.id, patent.patentId, patent.date, patent.title,
             patent.description);
-  @override
-  Map<String, dynamic> toMap() => {
-        'id': (id == 0) ? null : id,
-        'pid': patentId,
-        'title': title,
-        'date': date,
-        'description': description,
-      };
 }
