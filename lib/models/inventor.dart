@@ -1,5 +1,4 @@
 class Inventor {
-  int testVariable;
   int id;
   String invId;
   String firstName;
